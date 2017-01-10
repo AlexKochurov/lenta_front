@@ -5,7 +5,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: [
     "webpack-hot-middleware/client?reload=true",
-    "./src/index.js",
+    "./src/index.jsx",
   ],
 
   output: {
@@ -15,27 +15,30 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
   ],
 
   module: {
-    preLoaders: [
-      {
-        test:    /\.jsx?$/,
-        loader:  'eslint',
-        exclude: /node_modules/
-      }
-    ],
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loaders: ["babel-loader", "react-hot"]
+        include: __dirname + "/src",
+        loaders: ["eslint", "react-hot"]
+      },
+      {
+        test: /\.jsx?$/,
+        include: __dirname + "/src",
+        loader: "babel-loader",
+        query: {
+          presets: ['es2015', 'react']
+        }
       }
     ],
 
     eslint: {
-      failOnWarning: true,
+      failOnWarning: false,
       failOnError: true
     }
   }
