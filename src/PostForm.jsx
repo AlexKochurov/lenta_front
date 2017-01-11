@@ -2,6 +2,6 @@ import React from 'react';
 
 export default React.createClass({
   render: function() {
-    return <p>Добавление записи запрещено</p>;
+    return <div style={{background: 'yellow'}}>Добавление записи запрещено</div>;
   }
 });
